@@ -8,15 +8,24 @@ import SleeveDetection;
 @Autonomous(name= "Pushbot: Auto Drive By Time", group= "Pushbot")
 public class DriveByTimeAuton extends LinearOpMode {
 
+    private SleeveDetection sleeveDetection;
+    private OpenCvCamera camera;
+
     HardwarePushbot robot = new HardwarePushbot();
     private ElapsedTime runtime = new ElapsedTime();
 
-    public SleeveDetection.ParkingPosition targetPos = null;
+    private String webcamName = "Grondcam";
+
 
     @Override
     public void runOpMode(){
         robot.init(hardwareMap);
-        targetPos = SleeveDetection.getPosition();
+        int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, webcamName), cameraMonitorViewId);
+        sleeveDetection = new SleeveDetection();
+        camera.setPipeline(sleeveDetection);
+
+        sleeveDetection.ParkingPosition targetPos = sleeveDetection.getPosition();
 
         telemetry.addData("Status", "Ready to Run");
         telemetry.update();
