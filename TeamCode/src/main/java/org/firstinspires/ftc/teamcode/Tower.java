@@ -11,18 +11,22 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 public enum LevelEnum {base, terminal, low, medium, high};
 
-public final double BASE_LEVEL = 0.0;
-public final double TERMINAL_LEVEL = 0.0;
-public final double LOW_LEVEL = 0.0;
-public final double MEDIUM_LEVEL = 0.0;
-public final double HIGH_LEVEL = 0.0;
+
 
 
 
 public class Tower extends Thread {
+
+    public final double BASE_LEVEL = 0.0;
+    public final double TERMINAL_LEVEL = 0.0;
+    public final double LOW_LEVEL = 0.0;
+    public final double MEDIUM_LEVEL = 0.0;
+    public final double HIGH_LEVEL = 0.0;
+
     public DcMotor r_tower = null;
     public DcMotor l_tower = null;
     public bool finished = false;
+    public LevelEnum t_level = LevelEnum.base;
     public Tower(DcMotor right, DcMotor left, Telemetry telemetry) {
         this.telemetry = telemetry;
         this.setname("tower");
@@ -41,15 +45,20 @@ public class Tower extends Thread {
     }
 
 
-    public void raise() {}
+    public void raise(LevelEnum level) {}
 
-    public void lower() {}
+    public void lower(LevelEnum level) {
+        while (t_level != level) {
+            l_power.setPower(1);
+        }
+
+    }
 
     @Override
     public void run() {
         try {
             while (! isInterrupted()) {
-                // 
+                 
             }
         }
 

@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import SleeveDetection;
 
 @Autonomous(name= "Pushbot: Auto Drive By Time", group= "Pushbot")
 public class DriveByTimeAuton extends LinearOpMode {
@@ -10,9 +11,12 @@ public class DriveByTimeAuton extends LinearOpMode {
     HardwarePushbot robot = new HardwarePushbot();
     private ElapsedTime runtime = new ElapsedTime();
 
+    public SleeveDetection.ParkingPosition targetPos = null;
+
     @Override
     public void runOpMode(){
         robot.init(hardwareMap);
+        targetPos = SleeveDetection.getPosition();
 
         telemetry.addData("Status", "Ready to Run");
         telemetry.update();
